@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>St. Vincent's Preschool — Home</title>
+  <meta name="description" content="St. Vincent's Preschool — premium preschool & daycare in Chandanagar. Play-based EYFS curriculum." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --brand: #8b2b58;
+      --brand-dark: #6f1f44;
+      --muted: #6b7280;
+      --surface-primary: #fffaf8;
+      --border-light: #f2e4eb;
+    }
+    body {
+      background: var(--surface-primary);
+      color: #0f172a;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    .btn-primary {
+      background: var(--brand);
+      color: #fff;
+      padding: .6rem 1rem;
+      border-radius: 999px;
+      font-weight: 600;
+      display: inline-flex;
+      gap: .5rem;
+      align-items: center;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .btn-primary:hover {
+      background: var(--brand-dark);
+    }
+    .btn-primary-outline {
+      border: 2px solid var(--brand);
+      color: var(--brand);
+      padding: .5rem .9rem;
+      border-radius: 999px;
+      font-weight: 600;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-primary-outline:hover {
+      background: var(--brand);
+      color: white;
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--brand);
+      padding: .4rem .8rem;
+      border-radius: 10px;
+      border: 1px dashed #f3e5ec;
+      cursor: pointer;
+    }
+    .faq-q {
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .faq-q .sign {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: #fff;
+      border: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(15,23,42,0.04);
+      transition: transform 0.3s;
+    }
+    .faq-q[aria-expanded="true"] .sign {
+      transform: rotate(45deg);
+    }
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .modal-content {
+      background: white;
+      border-radius: 12px;
+      max-width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      transform: scale(0.9);
+      transition: transform 0.3s;
+      padding: 2rem;
+    }
+    .modal-overlay.active .modal-content {
+      transform: scale(1);
+    }
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 1001;
+      color: var(--brand-dark);
+      transition: transform 0.3s;
+    }
+    .modal-close:hover {
+      transform: rotate(90deg);
+    }
+    .whatsapp-float {
+      position: fixed;
+      width: 60px;
+      height: 60px;
+      bottom: 40px;
+      right: 40px;
+      background-color: #25d366;
+      color: #fff;
+      border-radius: 50px;
+      text-align: center;
+      font-size: 30px;
+      box-shadow: 2px 2px 3px #999;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s;
+    }
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+    }
+    .page-section {
+      display: none;
+    }
+    .page-section.active {
+      display: block;
+    }
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .blog-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .blog-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+    .blog-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .blog-card-content {
+      padding: 1.5rem;
+    }
+    .blog-card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--brand-dark);
+      margin-bottom: 0.5rem;
+    }
+    .blog-card p {
+      color: var(--muted);
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+    .testimonial-slider {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      background: white;
+      padding: 2rem 0;
+    }
+    .testimonial-track {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+    .testimonial-slide {
+      min-width: 100%;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .slider-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .slider-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #d1d5db;
+      cursor: pointer;
+      transition: background 0.3s;
+      border: none;
+    }
+    .slider-dot.active {
+      background: var(--brand);
+    }
+    .slider-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.8);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .slider-arrow:hover {
+      background: rgba(255, 255, 255, 1);
+    }
+    .slider-arrow.prev {
+      left: 10px;
+    }
+    .slider-arrow.next {
+      right: 10px;
+    }
+    /* Gallery Styles */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      aspect-ratio: 4/3;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .gallery-item:hover {
+      transform: scale(1.05);
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .gallery-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+      color: white;
+      padding: 1rem;
+      transform: translateY(100%);
+      transition: transform 0.3s;
+    }
+    .gallery-item:hover .gallery-overlay {
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="bg-white shadow fixed w-full z-50">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="#home" class="flex items-center gap-3" aria-label="Home">
+        <div><div class="text-xl font-semibold">St. Vincent's</div><div class="text-xs text-gray-500 -mt-1">Preschool & Daycare</div></div>
+      </a>
+      <nav class="hidden md:flex gap-6 items-center" role="navigation">
+        <a href="#home" class="nav-link text-gray-700 hover:text-[--brand]">Home</a>
+        <a href="#programs" class="nav-link text-gray-700 hover:text-[--brand]">Programs</a>
+        <a href="#gallery" class="nav-link text-gray-700 hover:text-[--brand]">Gallery</a>
+        <a href="#blogs" class="nav-link text-gray-700 hover:text-[--brand]">Blog</a>
+        <a href="#faq" class="nav-link text-gray-700 hover:text-[--brand]">FAQ</a>
+        <button class="btn-primary-outline open-contact-modal">Contact</button>
+      </nav>
+      <button id="menu-btn" class="md:hidden p-2 rounded text-[--brand]" aria-controls="mobile-menu" aria-expanded="false" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+      <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-2">
+        <a href="#home" class="nav-link text-gray-700 hover:text-[--brand] py-2">Home</a>
+        <a href="#programs" class="nav-link text-gray-700 hover:text-[--brand] py-2">Programs</a>
+        <a href="#gallery" class="nav-link text-gray-700 hover:text-[--brand] py-2">Gallery</a>
+        <a href="#blogs" class="nav-link text-gray-700 hover:text-[--brand] py-2">Blog</a>
+        <a href="#faq" class="nav-link text-gray-700 hover:text-[--brand] py-2">FAQ</a>
+        <button class="btn-primary-outline open-contact-modal mt-2">Contact</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- PAGE CONTAINER -->
+  <div id="page-container">
+    
+    <!-- HOME PAGE -->
+    <div id="home-page" class="page-section active">
+      <main class="max-w-6xl mx-auto px-4 pt-28 pb-20">
+        <!-- Hero Section -->
+        <section id="home" class="grid md:grid-cols-2 gap-8 items-center py-12">
+          <div>
+            <h1 class="text-4xl md:text-5xl font-extrabold leading-tight text-[#3b0b27]">"Where Every Child Shines"</h1>
+            <p class="mt-4 text-lg text-gray-700 max-w-xl">A premium, nurturing, and joyful environment for early childhood education. With secure facilities and a safe learning environment, our play-based curriculum helps your child grow.</p>
+            <div class="mt-6 flex gap-3 flex-wrap">
+              <a href="#programs" class="btn-primary">Programs</a>
+              <button class="btn-primary-outline open-contact-modal" data-program="">Schedule a Tour</button>
+              <a href="tel:+919032249494" class="btn-ghost">Call Us</a>
+            </div>
+          </div>
+          <div class="mx-auto">
+            <img src="https://placehold.co/600x400/8b2b58/ffffff?text=Happy+Children" alt="Children smiling" class="w-full h-auto rounded-lg object-cover shadow-lg">
+          </div>
+        </section>
+
+        <!-- Programs Section -->
+        <section id="programs" class="pt-12">
+          <header class="text-center mb-8">
+            <h2 class="text-3xl font-bold">Our Curriculum & Programs</h2>
+            <p class="mt-2 text-gray-600 max-w-3xl mx-auto">EYFS Curriculum – Learning Through Play. At St. Vincent's Preschool, we follow the Early Years Foundation Stage (EYFS) framework that promotes holistic growth through play and exploration.</p>
+          </header>
+          <div class="max-w-7xl mx-auto grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            <!-- Playgroup Card -->
+            <div class="program-card p-6 rounded-xl shadow-lg border-t-4 border-t-yellow-500">
+              <div class="flex items-center space-x-4 mb-4">
+                <i class="fas fa-baby text-3xl text-yellow-500 p-3 bg-yellow-100 rounded-full"></i>
+                <h3 class="text-2xl font-bold text-gray-800">Playgroup</h3>
+              </div>
+              <p class="text-sm font-semibold text-gray-500 mb-2">Age: 1.5 – 3 Years</p>
+              <p class="text-base text-gray-700 mb-4"><strong>Core Objective:</strong> Social & Sensory Exploration</p>
+              <ul class="text-sm text-gray-600 space-y-2 list-disc pl-5">
+                <li>Separation comfort & secure attachments</li>
+                <li>Sensory Play (sand, water, textures)</li>
+                <li>Gross Motor Skills development</li>
+                <li>Music & Movement</li>
+              </ul>
+              <div class="mt-4 flex gap-3">
+                <button class="btn-primary open-contact-modal" data-program="Playgroup">Enquire</button>
+              </div>
+            </div>
+            <!-- Nursery Card -->
+            <div class="program-card p-6 rounded-xl shadow-lg border-t-4 border-t-green-500">
+              <div class="flex items-center space-x-4 mb-4">
+                <i class="fas fa-pencil-ruler text-3xl text-green-500 p-3 bg-green-100 rounded-full"></i>
+                <h3 class="text-2xl font-bold text-gray-800">Nursery</h3>
+              </div>
+              <p class="text-sm font-semibold text-gray-500 mb-2">Age: 3 – 4 Years</p>
+              <p class="text-base text-gray-700 mb-4"><strong>Core Objective:</strong> Building Blocks for a Bright Future</p>
+              <ul class="text-sm text-gray-600 space-y-2 list-disc pl-5">
+                <li>Pre-reading & phonics awareness</li>
+                <li>Pre-writing Skills</li>
+                <li>Number recognition & counting</li>
+                <li>Colors & Shapes recognition</li>
+              </ul>
+              <div class="mt-4 flex gap-3">
+                <button class="btn-primary open-contact-modal" data-program="Nursery">Enquire</button>
+              </div>
+            </div>
+            <!-- PP1 Card -->
+            <div class="program-card p-6 rounded-xl shadow-lg border-t-4 border-t-blue-500">
+              <div class="flex items-center space-x-4 mb-4">
+                <i class="fas fa-book-open text-3xl text-blue-500 p-3 bg-blue-100 rounded-full"></i>
+                <h3 class="text-2xl font-bold text-gray-800">Pre-Primary 1 (LKG)</h3>
+              </div>
+              <p class="text-sm font-semibold text-gray-500 mb-2">Age: 4 – 5 Years</p>
+              <p class="text-base text-gray-700 mb-4"><strong>Core Objective:</strong> Foundational Academic Skills</p>
+              <ul class="text-sm text-gray-600 space-y-2 list-disc pl-5">
+                <li>Reading & Writing</li>
+                <li>Basic Numeracy</li>
+                <li>EVS Concepts (Environmental Science)</li>
+                <li>Creative Expression</li>
+              </ul>
+              <div class="mt-4 flex gap-3">
+                <button class="btn-primary open-contact-modal" data-program="PP1">Enquire</button>
+              </div>
+            </div>
+            <!-- PP2 Card -->
+            <div class="program-card p-6 rounded-xl shadow-lg border-t-4 border-t-red-500">
+              <div class="flex items-center space-x-4 mb-4">
+                <i class="fas fa-graduation-cap text-3xl text-red-500 p-3 bg-red-100 rounded-full"></i>
+                <h3 class="text-2xl font-bold text-gray-800">Pre-Primary 2 (UKG)</h3>
+              </div>
+              <p class="text-sm font-semibold text-gray-500 mb-2">Age: 5 – 6 Years</p>
+              <p class="text-base text-gray-700 mb-4"><strong>Core Objective:</strong> Reading fluency, arithmetic basics & school readiness</p>
+              <ul class="text-sm text-gray-600 space-y-2 list-disc pl-5">
+                <li>Advanced Reading & Writing</li>
+                <li>Mathematical Concepts</li>
+                <li>Science Exploration</li>
+                <li>Public Speaking</li>
+              </ul>
+              <div class="mt-4 flex gap-3">
+                <button class="btn-primary open-contact-modal" data-program="PP2">Enquire</button>
+              </div>
+            </div>
+            <!-- Day Care Card -->
+            <div class="program-card p-6 rounded-xl shadow-lg border-t-4 border-t-purple-500 md:col-span-2 lg:col-span-1 mx-auto md:w-full lg:w-full max-w-lg">
+              <div class="flex items-center space-x-4 mb-4">
+                <i class="fas fa-clock text-3xl text-purple-500 p-3 bg-purple-100 rounded-full"></i>
+                <h3 class="text-2xl font-bold text-gray-800">Day Care</h3>
+              </div>
+              <p class="text-sm font-semibold text-gray-500 mb-2">Age: 1.5 Years Onwards</p>
+              <p class="text-base text-gray-700 mb-4"><strong>Core Objective:</strong> Safe, structured extended care</p>
+              <ul class="text-sm text-gray-600 space-y-2 list-disc pl-5">
+                <li>Homework Assistance</li>
+                <li>Hobby Classes</li>
+                <li>Structured Play</li>
+                <li>Nap Time</li>
+              </ul>
+              <div class="mt-4 flex gap-3">
+                <button class="btn-primary open-contact-modal" data-program="Day Care">Enquire</button>
+              </div>
+            </div>
+          </div>
+          <div class="text-center mt-8">
+            <a href="#programs-page" class="btn-primary">View All Programs</a>
+          </div>
+        </section>
+
+        <!-- Resources/Blog Section -->
+        <section id="blogs" class="py-12">
+          <div class="flex items-center justify-between mb-8">
+            <h2 class="text-3xl font-bold">Parent Resources & Insights</h2>
+            <a href="#blogs-page" class="btn-primary-outline">View All Blogs</a>
+          </div>
+          <div class="blog-grid" id="blog-cards-home">
+            <!-- Blog cards will be injected here -->
+          </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="py-12">
+          <header class="text-center mb-8">
+            <h2 class="text-3xl font-bold mb-2">Our Learning Spaces</h2>
+            <p class="text-gray-600">Take a virtual tour through our vibrant classrooms and play areas</p>
+          </header>
+          <div class="gallery-grid">
+            <div class="gallery-item">
+              <img src="https://placehold.co/400x300/8b2b58/ffffff?text=Classroom" alt="Classroom">
+              <div class="gallery-overlay">
+                <p class="font-semibold">Bright & Spacious Classrooms</p>
+              </div>
+            </div>
+            <div class="gallery-item">
+              <img src="https://placehold.co/400x300/a84066/ffffff?text=Play+Area" alt="Play Area">
+              <div class="gallery-overlay">
+                <p class="font-semibold">Outdoor Play Area</p>
+              </div>
+            </div>
+            <div class="gallery-item">
+              <img src="https://placehold.co/400x300/6f1f44/ffffff?text=Art+Room" alt="Art Room">
+              <div class="gallery-overlay">
+                <p class="font-semibold">Creative Art Studio</p>
+              </div>
+            </div>
+            <div class="gallery-item">
+              <img src="https://placehold.co/400x300/8b2b58/ffffff?text=Music+Room" alt="Music Room">
+              <div class="gallery-overlay">
+                <p class="font-semibold">Music & Movement Hall</p>
+              </div>
+            </div>
+            <div class="gallery-item">
+              <img src="https://placehold.co/400x300/a84066/ffffff?text=Library" alt="Library">
+              <div class="gallery-overlay">
+                <p class="font-semibold">Reading Nook</p>
+              </div>
+            </div>
+            <div class="gallery-item">
+              <img src="https://placehold.co/400x300/6f1f44/ffffff?text=Garden" alt="Garden">
+              <div class="gallery-overlay">
+                <p class="font-semibold">Organic Learning Garden</p>
+              </div>
+            </div>
+          </div>
+          <div class="text-center mt-8">
+            <a href="#gallery-page" class="btn-primary-outline">View Full Gallery</a>
+          </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="py-12">
+          <header class="text-center mb-8">
+            <h2 class="text-3xl font-bold" style="color: var(--brand-dark);">What Parents Say</h2>
+            <p class="text-gray-600 mt-2">Top ratings from Chandanagar families</p>
+          </header>
+          <div class="testimonial-slider" id="testimonial-slider">
+            <div class="testimonial-track" id="testimonial-track">
+              <!-- Testimonials will be injected here -->
+            </div>
+            <button class="slider-arrow prev" id="prev-btn" aria-label="Previous testimonial">‹</button>
+            <button class="slider-arrow next" id="next-btn" aria-label="Next testimonial">›</button>
+            <div class="slider-dots" id="slider-dots"></div>
+          </div>
+          <div class="text-center mt-6">
+            <div class="inline-flex items-center gap-2">
+              <i class="fas fa-star text-yellow-500"></i>
+              <span class="text-lg font-semibold">4.9/5 Google Rating</span>
+              <span class="text-gray-600">(200+ reviews)</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="py-12">
+          <div class="max-w-6xl mx-auto bg-white rounded-xl p-8 shadow">
+            <h2 class="text-3xl font-bold text-center mb-2">Frequently Asked Questions</h2>
+            <p class="text-center text-gray-600 mb-8">Answers to common questions asked by parents</p>
+            
+            <div class="space-y-4">
+              <div class="p-6 rounded-lg border">
+                <div class="faq-q" aria-expanded="false">
+                  <div class="text-lg font-semibold">What is the ideal age to start preschool?</div>
+                  <div class="sign">+</div>
+                </div>
+                <div class="faq-a mt-3 text-gray-700" style="max-height:0;overflow:hidden;transition:max-height .28s ease">
+                  <p class="mb-4">Children typically start between 1.5–3 years depending on readiness. Our Playgroup caters to 1.5+ with gentle settling and sensory play. Starting early gives your child a head start in social development and learning!</p>
+                  <button class="btn-primary open-contact-modal" data-program="Playgroup Enquiry">Enquire About Playgroup</button>
+                </div>
+              </div>
+
+              <div class="p-6 rounded-lg border">
+                <div class="faq-q" aria-expanded="false">
+                  <div class="text-lg font-semibold">How can I prepare my toddler for preschool?</div>
+                  <div class="sign">+</div>
+                </div>
+                <div class="faq-a mt-3 text-gray-700" style="max-height:0;overflow:hidden;transition:max-height .28s ease">
+                  <p class="mb-4">Start short separation practices, encourage simple routines (handwashing, snack time), read books daily, and practice simple self-help tasks. Don't wait—secure your child's spot today before classrooms fill up!</p>
+                  <button class="btn-primary open-contact-modal" data-program="School Readiness">Get School Readiness Tips</button>
+                </div>
+              </div>
+
+              <div class="p-6 rounded-lg border">
+                <div class="faq-q" aria-expanded="false">
+                  <div class="text-lg font-semibold">What should I look for in a quality preschool?</div>
+                  <div class="sign">+</div>
+                </div>
+                <div class="faq-a mt-3 text-gray-700" style="max-height:0;overflow:hidden;transition:max-height .28s ease">
+                  <p class="mb-4">Safe environment, trained teachers, play-based curriculum, low student-teacher ratio, hygiene & clear communication with parents. St. Vincent's checks all these boxes—schedule your tour now!</p>
+                  <button class="btn-primary open-contact-modal" data-program="Quality Preschool">Schedule a Quality Check Tour</button>
+                </div>
+              </div>
+
+              <div class="p-6 rounded-lg border">
+                <div class="faq-q" aria-expanded="false">
+                  <div class="text-lg font-semibold">How does preschool help with separation anxiety?</div>
+                  <div class="sign">+</div>
+                </div>
+                <div class="faq-a mt-3 text-gray-700" style="max-height:0;overflow:hidden;transition:max-height .28s ease">
+                  <p class="mb-4">Gradual settling, consistent routines, familiar staff, and parent partnership help children feel secure. Our proven 3-week settling program has helped 500+ children transition smoothly—enroll now!</p>
+                  <button class="btn-primary open-contact-modal" data-program="Separation Anxiety">Learn Our Anxiety-Free Method</button>
+                </div>
+              </div>
+
+              <div class="p-6 rounded-lg border">
+                <div class="faq-q" aria-expanded="false">
+                  <div class="text-lg font-semibold">How do you handle emergencies or sickness?</div>
+                  <div class="sign">+</div>
+                </div>
+                <div class="faq-a mt-3 text-gray-700" style="max-height:0;overflow:hidden;transition:max-height .28s ease">
+                  <p class="mb-4">First-aid trained staff, parent notification protocols, and quick access to local medical support. Serious cases are immediately escalated. Your child's safety is our #1 priority—see our safety protocols!</p>
+                  <button class="btn-primary open-contact-modal" data-program="Safety Protocols">View Safety Protocols</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-10">
+          <div class="max-w-6xl mx-auto bg-[#fff] rounded-xl p-8 shadow-lg text-center">
+            <h2 class="text-2xl font-bold">Ready to Give Your Child a Premium Preschool Experience?</h2>
+            <p class="text-gray-600 mt-2">Join the St. Vincent's family and watch your child prosper in our nurturing environment.</p>
+            <div class="mt-6 flex justify-center gap-4 flex-wrap">
+              <button class="btn-primary open-contact-modal">Schedule a Tour Today</button>
+              <a class="btn-primary-outline" href="tel:+919032249494">Call +91 9032249494</a>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- PROGRAMS PAGE -->
+    <div id="programs-page" class="page-section">
+      <main class="max-w-6xl mx-auto px-4 pt-28 pb-20">
+        <header class="text-center py-12">
+          <h1 class="text-4xl font-bold mb-4" style="color: var(--brand-dark);">Our Programs</h1>
+          <p class="text-lg text-gray-600 max-w-3xl mx-auto">Comprehensive early childhood programs designed for every stage of development</p>
+        </header>
+        <div class="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          <!-- All program cards in full detail -->
+          <div class="program-card p-6 rounded-xl shadow-lg border-t-4 border-t-yellow-500">
+            <div class="flex items-center space-x-4 mb-4">
+              <i class="fas fa-baby text-3xl text-yellow-500 p-3 bg-yellow-100 rounded-full"></i>
+              <h3 class="text-2xl font-bold text-gray-800">Playgroup</h3>
+            </div>
+            <p class="text-sm font-semibold text-gray-500 mb-2">Age: 1.5 – 3 Years</p>
+            <p class="text-base text-gray-700 mb-4"><strong>Core Objective:</strong> Social & Sensory Exploration</p>
+            <ul class="text-sm text-gray-600 space-y-2 list-disc pl-5">
+              <li>Separation comfort & secure attachments</li>
+              <li>Sensory Play (sand, water, textures)</li>
+              <li>Gross Motor Skills development</li>
+              <li>Music & Movement</li>
+            </ul>
+            <div class="mt-6 flex gap-3">
+              <button class="btn-primary open-contact-modal" data-program="Playgroup">Enquire Now</button>
+            </div>
+          </div>
+          <!-- Add all other program cards -->
+        </div>
+      </main>
+    </div>
+
+    <!-- GALLERY PAGE -->
+    <div id="gallery-page" class="page-section">
+      <main class="max-w-6xl mx-auto px-4 pt-28 pb-20">
+        <header class="text-center py-12">
+          <h1 class="text-4xl font-bold mb-4" style="color: var(--brand-dark);">Gallery</h1>
+          <p class="text-lg text-gray-600 max-w-3xl mx-auto">Explore our vibrant learning spaces and facilities</p>
+        </header>
+        <div class="gallery-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+          <!-- Full gallery with more images -->
+          <div class="gallery-item">
+            <img src="https://placehold.co/500x350/8b2b58/ffffff?text=Classroom+1" alt="Classroom">
+            <div class="gallery-overlay"><p class="font-semibold">Primary Classroom</p></div>
+          </div>
+          <div class="gallery-item">
+            <img src="https://placehold.co/500x350/a84066/ffffff?text=Playground" alt="Playground">
+            <div class="gallery-overlay"><p class="font-semibold">Outdoor Playground</p></div>
+          </div>
+          <div class="gallery-item">
+            <img src="https://placehold.co/500x350/6f1f44/ffffff?text=Art+Studio" alt="Art Room">
+            <div class="gallery-overlay"><p class="font-semibold">Art & Craft Studio</p></div>
+          </div>
+          <div class="gallery-item">
+            <img src="https://placehold.co/500x350/8b2b58/ffffff?text=Music+Hall" alt="Music Hall">
+            <div class="gallery-overlay"><p class="font-semibold">Music & Dance Hall</p></div>
+          </div>
+          <div class="gallery-item">
+            <img src="https://placehold.co/500x350/a84066/ffffff?text=Library" alt="Library">
+            <div class="gallery-overlay"><p class="font-semibold">Reading Library</p></div>
+          </div>
+          <div class="gallery-item">
+            <img src="https://placehold.co/500x350/6f1f44/ffffff?text=Garden" alt="Garden">
+            <div class="gallery-overlay"><p class="font-semibold">Learning Garden</p></div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- BLOGS PAGE -->
+    <div id="blogs-page" class="page-section">
+      <main class="max-w-6xl mx-auto px-4 pt-28 pb-20">
+        <header class="text-center py-12">
+          <h1 class="text-4xl font-bold mb-4" style="color: var(--brand-dark);">Parent Resources & Blog</h1>
+          <p class="text-lg text-gray-600 max-w-3xl mx-auto">Expert advice and insights for raising happy, confident children</p>
+        </header>
+        <div class="blog-grid">
+          <!-- All blog posts -->
+          <div class="blog-card">
+            <img src="https://placehold.co/600x400/8b2b58/ffffff?text=Development+Window" alt="Blog 1">
+            <div class="blog-card-content">
+              <h3>Is Your Child Falling Behind? 5 Signs They Need Preschool NOW</h3>
+              <p>Parents miss these critical developmental windows—don't let your child be left behind! Research shows children who attend quality preschool before age 3 are 30% more likely to excel in kindergarten.</p>
+              <button class="btn-primary" onclick="openBlogModal(1)">Read More</button>
+            </div>
+          </div>
+          <div class="blog-card">
+            <img src="https://placehold.co/600x400/a84066/ffffff?text=Waitlist+Alert" alt="Blog 2">
+            <div class="blog-card-content">
+              <h3>Why Chandanagar Parents Are Choosing St. Vincent's</h3>
+              <p>The #1 preschool in Chandanagar—discover why parents are scrambling to enroll! Only 12 spots left for 2025. Our waitlist is growing faster than any other preschool.</p>
+              <button class="btn-primary" onclick="openBlogModal(2)">Read More</button>
+            </div>
+          </div>
+          <div class="blog-card">
+            <img src="https://placehold.co/600x400/6f1f44/ffffff?text=Real+Play+Based" alt="Blog 3">
+            <div class="blog-card-content">
+              <h3>The 'Play-Based Learning' Scam: What Other Preschools Don't Tell You</h3>
+              <p>Not all 'play' is equal. Discover the difference that matters for your child's future! "Play-based" is the new buzzword, but most preschools just let kids run wild.</p>
+              <button class="btn-primary" onclick="openBlogModal(3)">Read More</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- FAQ PAGE -->
+    <div id="faq-page" class="page-section">
+      <main class="max-w-6xl mx-auto px-4 pt-28 pb-20">
+        <header class="text-center py-12">
+          <h1 class="text-4xl font-bold mb-4" style="color: var(--brand-dark);">Frequently Asked Questions</h1>
+          <p class="text-lg text-gray-600 max-w-3xl mx-auto">Everything you need to know about enrolling your child at St. Vincent's</p>
+        </header>
+        <div class="max-w-4xl mx-auto space-y-4">
+          <div class="p-6 rounded-lg border bg-white">
+            <div class="faq-q" aria-expanded="false">
+              <div class="text-xl font-semibold">What is the ideal age to start preschool?</div>
+              <div class="sign">+</div>
+            </div>
+            <div class="faq-a mt-3 text-gray-700" style="max-height:0;overflow:hidden;transition:max-height .28s ease">
+              <p class="mb-4 text-base">Children typically start between 1.5–3 years depending on readiness. Our Playgroup caters to 1.5+ with gentle settling and sensory play. Starting early gives your child a head start in social development and learning!</p>
+              <button class="btn-primary open-contact-modal" data-program="Playgroup Enquiry">Enquire About Playgroup</button>
+            </div>
+          </div>
+
+          <div class="p-6 rounded-lg border bg-white">
+            <div class="faq-q" aria-expanded="false">
+              <div class="text-xl font-semibold">How can I prepare my toddler for preschool?</div>
+              <div class="sign">+</div>
+            </div>
+            <div class="faq-a mt-3 text-gray-700" style="max-height:0;overflow:hidden;transition:max-height .28s ease">
+              <p class="mb-4 text-base">Start short separation practices, encourage simple routines (handwashing, snack time), read books daily, and practice simple self-help tasks. Don't wait—secure your child's spot today before classrooms fill up!</p>
+              <button class="btn-primary open-contact-modal" data-program="School Readiness">Get School Readiness Tips</button>
+            </div>
+          </div>
+
+          <div class="p-6 rounded-lg border bg-white">
+            <div class="faq-q" aria-expanded="false">
+              <div class="text-xl font-semibold">What should I look for in a quality preschool?</div>
+              <div class="sign">+</div>
+            </div>
+            <div class="faq-a mt-3 text-gray-700" style="max-height:0;overflow:hidden;transition:max-height .28s ease">
+              <p class="mb-4 text-base">Safe environment, trained teachers, play-based curriculum, low student-teacher ratio, hygiene & clear communication with parents. St. Vincent's checks all these boxes—schedule your tour now!</p>
+              <button class="btn-primary open-contact-modal" data-program="Quality Preschool">Schedule a Quality Check Tour</button>
+            </div>
+          </div>
+
+          <div class="p-6 rounded-lg border bg-white">
+            <div class="faq-q" aria-expanded="false">
+              <div class="text-xl font-semibold">How does preschool help with separation anxiety?</div>
+              <div class="sign">+</div>
+            </div>
+            <div class="faq-a mt-3 text-gray-700" style="max-height:0;overflow:hidden;transition:max-height .28s ease">
+              <p class="mb-4 text-base">Gradual settling, consistent routines, familiar staff, and parent partnership help children feel secure. Our proven 3-week settling program has helped 500+ children transition smoothly—enroll now!</p>
+              <button class="btn-primary open-contact-modal" data-program="Separation Anxiety">Learn Our Anxiety-Free Method</button>
+            </div>
+          </div>
+
+          <div class="p-6 rounded-lg border bg-white">
+            <div class="faq-q" aria-expanded="false">
+              <div class="text-xl font-semibold">How do you handle emergencies or sickness?</div>
+              <div class="sign">+</div>
+            </div>
+            <div class="faq-a mt-3 text-gray-700" style="max-height:0;overflow:hidden;transition:max-height .28s ease">
+              <p class="mb-4 text-base">First-aid trained staff, parent notification protocols, and quick access to local medical support. Serious cases are immediately escalated. Your child's safety is our #1 priority—see our safety protocols!</p>
+              <button class="btn-primary open-contact-modal" data-program="Safety Protocols">View Safety Protocols</button>
+            </div>
+          </div>
+
+          <div class="p-6 rounded-lg border bg-white">
+            <div class="faq-q" aria-expanded="false">
+              <div class="text-xl font-semibold">What are your fees and payment options?</div>
+              <div class="sign">+</div>
+            </div>
+            <div class="faq-a mt-3 text-gray-700" style="max-height:0;overflow:hidden;transition:max-height .28s ease">
+              <p class="mb-4 text-base">We offer competitive pricing with flexible payment plans (monthly, quarterly, annually). Fees vary by program. Contact us for our current fee structure and early bird discounts!</p>
+              <button class="btn-primary open-contact-modal" data-program="Fees Enquiry">Request Fee Structure</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+  </div> <!-- END PAGE CONTAINER -->
+
+  <!-- Footer -->
+  <footer class="bg-[--brand] text-white mt-12">
+    <div class="max-w-6xl mx-auto px-6 py-10 grid md:grid-cols-3 gap-6">
+      <div>
+        <h3 class="text-lg font-semibold mb-2">St. Vincent's Preschool</h3>
+        <p class="text-gray-200">Nurturing early learning in Chandanagar with play-based curriculum and loving care.</p>
+      </div>
+      <div>
+        <h4 class="font-semibold mb-2">Quick Links</h4>
+        <ul class="space-y-1 text-gray-200">
+          <li><a href="#programs-page">Programs</a></li>
+          <li><a href="#gallery-page">Gallery</a></li>
+          <li><a href="#faq-page">FAQ</a></li>
+          <li><a href="#blogs-page">Blog</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-semibold mb-2">Contact</h4>
+        <p class="text-gray-200">+91 9032249494<br/>Stvincent.school25@gmail.com</p>
+      </div>
+    </div>
+    <div class="text-center py-4 text-sm bg-[#6a1a3a]">© 2025 St. Vincent's Preschool & Daycare. All rights reserved.</div>
+  </footer>
+
+  <!-- WhatsApp Floating Icon -->
+  <a href="https://wa.me/919032249494?text=Hello!%20I'm%20interested%20in%20enrolling%20my%20child%20at%20St.%20Vincent's%20Preschool." 
+     class="whatsapp-float" 
+     target="_blank" 
+     rel="noopener" 
+     aria-label="Chat with us on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <!-- Contact Form Modal -->
+  <div id="contact-modal-overlay" class="modal-overlay">
+    <div class="modal-content max-w-md">
+      <button class="modal-close" id="contact-modal-close" aria-label="Close form">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+      </button>
+      <h2 class="text-2xl font-bold mb-4" style="color: var(--brand-dark);">Schedule Your Visit</h2>
+      <p class="text-gray-600 mb-6">Fill out this quick form and we'll contact you within 24 hours!</p>
+      
+      <form id="contact-form-modal" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Parent Name *</label>
+          <input type="text" name="user_name" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[--brand] focus:border-[--brand]">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+          <input type="email" name="user_email" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[--brand] focus:border-[--brand]">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
+          <input type="tel" name="user_phone" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[--brand] focus:border-[--brand]">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Child's Age *</label>
+          <select name="child_age" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[--brand] focus:border-[--brand]">
+            <option value="">Select age</option>
+            <option value="1.5-2">1.5 - 2 years</option>
+            <option value="2-3">2 - 3 years</option>
+            <option value="3-4">3 - 4 years</option>
+            <option value="4-5">4 - 5 years</option>
+            <option value="5-6">5 - 6 years</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Program of Interest</label>
+          <input type="text" name="program" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[--brand] focus:border-[--brand]">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Your Message</label>
+          <textarea name="message" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[--brand] focus:border-[--brand]"></textarea>
+        </div>
+        <button type="submit" class="btn-primary w-full">Send Enquiry</button>
+        <div id="form-message" class="mt-3 p-3 rounded-lg text-center font-medium hidden"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Blog Modal -->
+  <div id="blog-modal-overlay" class="modal-overlay">
+    <div class="modal-content max-w-3xl">
+      <button class="modal-close" id="blog-modal-close" aria-label="Close blog">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+      </button>
+      <div id="blog-modal-content"></div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script>
+    // EmailJS Configuration (Replace with your credentials)
+    (function() {
+      emailjs.init("YOUR_USER_ID");
+    })();
+
+    // Data
+    const blogData = [
+      {
+        id: 1,
+        title: "Is Your Child Falling Behind? 5 Signs They Need Preschool NOW",
+        summary: "Parents miss these critical developmental windows—don't let your child be left behind!",
+        image: "https://placehold.co/600x400/8b2b58/ffffff?text=Development+Window",
+        content: `
+          <img src="https://placehold.co/800x400/8b2b58/ffffff?text=Critical+Development" class="w-full rounded-lg mb-6">
+          <p class="text-lg text-gray-700 mb-4"><strong>Every day you wait is a day your child falls behind peers.</strong> Research shows children who attend quality preschool before age 3 are 30% more likely to excel in kindergarten.</p>
+          <h3 class="text-xl font-bold mb-3" style="color: var(--brand-dark);">🚨 5 URGENT Signs Your Child Needs Preschool:</h3>
+          <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
+            <li><strong>Clinginess:</strong> Can't be separated for 10 minutes (emotional regulation delayed)</li>
+            <li><strong>Poor Sharing:</strong> Hits or snatches toys (social skills gap widening)</li>
+            <li><strong>Limited Vocabulary:</strong> Less than 50 words by age 2 (language explosion window closing)</li>
+            <li><strong>Potty Training Resistance:</strong> Peer motivation works wonders</li>
+            <li><strong>Boredom at Home:</strong> Needs stimulation you can't provide</li>
+          </ul>
+          <p class="text-lg font-semibold text-[--brand] mb-6">Spots fill by March! Don't let your child start school already behind.</p>
+          <div class="text-center">
+            <button class="btn-primary open-contact-modal" data-program="Urgent Enquiry">Book Immediate Assessment - FREE!</button>
+          </div>
+        `
+      },
+      {
+        id: 2,
+        title: "Why Chandanagar Parents Are Choosing St. Vincent's (And Why You Should Too Before Waitlist Closes)",
+        summary: "The #1 preschool in Chandanagar—discover why parents are scrambling to enroll!",
+        image: "https://placehold.co/600x400/a84066/ffffff?text=Waitlist+Alert",
+        content: `
+          <img src="https://placehold.co/800x400/a84066/ffffff?text=Limited+Spots" class="w-full rounded-lg mb-6">
+          <p class="text-lg text-gray-700 mb-4"><strong>Only 12 spots left for 2025!</strong> Our waitlist is growing faster than any other preschool in Chandanagar. Here's what parents know that you don't:</p>
+          <h3 class="text-xl font-bold mb-3" style="color: var(--brand-dark);">What Makes Us #1:</h3>
+          <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
+            <li>✅ <strong>EYFS Certified Teachers:</strong> Only preschool in area with UK-qualified staff</li>
+            <li>✅ <strong>5-Star Google Rating:</strong> 200+ reviews (average 4.9/5)</li>
+            <li>✅ <strong>Lowest Student-Teacher Ratio:</strong> 1:6 for personalized attention</li>
+            <li>✅ <strong>CCTV + Live Updates:</strong> Watch your child anytime</li>
+            <li>✅ <strong>100% Kindergarten Readiness:</strong> Every graduate excels in big school</li>
+          </ul>
+          <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+            <p class="text-lg font-semibold text-yellow-800">⏰ WARNING: Last year we hit capacity by February. Don't risk your child's future!</p>
+          </div>
+          <div class="text-center">
+            <button class="btn-primary open-contact-modal" data-program="Priority Waitlist">Join Priority Waitlist NOW</button>
+          </div>
+        `
+      },
+      {
+        id: 3,
+        title: "The 'Play-Based Learning' Scam: What Other Preschools Don't Tell You",
+        summary: "Not all 'play' is equal. Discover the difference that matters for your child's future!",
+        image: "https://placehold.co/600x400/6f1f44/ffffff?text=Real+Play+Based",
+        content: `
+          <img src="https://placehold.co/800x400/6f1f44/ffffff?text=Quality+Play+Based" class="w-full rounded-lg mb-6">
+          <p class="text-lg text-gray-700 mb-4"><strong>"Play-based" is the new buzzword.</strong> But here's the secret: Most preschools just let kids run wild while teachers scroll phones. <em>That's not learning—that's babysitting.</em></p>
+          <h3 class="text-xl font-bold mb-3" style="color: var(--brand-dark);">Real Play-Based Learning (What We Do):</h3>
+          <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
+            <li><strong>Teacher-Guided Exploration:</strong> Every activity has a developmental goal</li>
+            <li><strong>90% Child-Led, 10% Structured:</strong> Perfect balance for growth</li>
+            <li><strong>Progress Tracking:</strong> We document learning in every game</li>
+            <li><strong>EYFS Standards:</strong> Aligned with UK early years framework</li>
+          </ul>
+          <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
+            <p class="text-lg font-semibold text-red-800">🚫 RED FLAG: If a preschool can't explain HOW play teaches math/reading—RUN!</p>
+          </div>
+          <p class="text-lg mb-6">Seeing is believing. <strong>90% of parents who tour St. Vincent's enroll on the spot.</strong> The other 10% regret going elsewhere.</p>
+          <div class="text-center">
+            <button class="btn-primary open-contact-modal" data-program="Play-Based Demo">See Real Play-Based Learning - FREE Demo!</button>
+          </div>
+        `
+      }
+    ];
+
+    // Testimonial Data
+    const testimonialData = [
+      { 
+        quote: "My child has shown incredible development and confidence after joining St. Vincent's. The teachers are truly caring professionals.", 
+        author: "Sai Ram", 
+        rating: 5 
+      },
+      { 
+        quote: "Excellent facilities and a clean, well-maintained campus that supports learning. Best preschool in Chandanagar!", 
+        author: "Latha B.", 
+        rating: 5 
+      },
+      { 
+        quote: "My daughter loves going to preschool! The environment is safe, nurturing, and the curriculum is engaging.", 
+        author: "Shashank Bhardwaj", 
+        rating: 5 
+      },
+      { 
+        quote: "Great environment with reasonable fees compared to other schools. Highly recommended for quality early education!", 
+        author: "Saurabh Shourie", 
+        rating: 5 
+      },
+      { 
+        quote: "Recently enrolled my son and he's already so happy. The school is spacious, hygienic, and teachers are wonderful.", 
+        author: "Anita Singha", 
+        rating: 5 
+      }
+    ];
+
+    // Modal Functions
+    const contactModal = document.getElementById('contact-modal-overlay');
+    const blogModal = document.getElementById('blog-modal-overlay');
+    const contactModalClose = document.getElementById('contact-modal-close');
+    const blogModalClose = document.getElementById('blog-modal-close');
+
+    function openContactModal(program = '') {
+      contactModal.querySelector('input[name="program"]').value = program;
+      contactModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeContactModal() {
+      contactModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function openBlogModal(blogId) {
+      const blog = blogData.find(b => b.id === blogId);
+      if (blog) {
+        document.getElementById('blog-modal-content').innerHTML = `
+          <h1 class="text-3xl font-bold mb-4" style="color: var(--brand-dark);">${blog.title}</h1>
+          ${blog.content}
+        `;
+        blogModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        // Re-attach CTA listeners in modal
+        setTimeout(() => {
+          document.querySelectorAll('#blog-modal-content .open-contact-modal').forEach(btn => {
+            btn.addEventListener('click', () => {
+              closeBlogModal();
+              setTimeout(() => openContactModal(btn.dataset.program || ''), 300);
+            });
+          });
+        }, 100);
+      }
+    }
+
+    function closeBlogModal() {
+      blogModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Testimonial Slider
+    function initTestimonialSlider() {
+      const track = document.getElementById('testimonial-track');
+      const dotsContainer = document.getElementById('slider-dots');
+      let currentSlide = 0;
+
+      // Render testimonials
+      track.innerHTML = testimonialData.map((t, i) => `
+        <div class="testimonial-slide">
+          <div class="flex justify-center mb-4 text-yellow-500">
+            ${Array(t.rating).fill('<i class="fas fa-star"></i>').join('')}
+          </div>
+          <i class="fas fa-quote-left text-3xl mb-4" style="color: var(--brand);"></i>
+          <p class="italic text-gray-800 text-lg mb-6 max-w-3xl mx-auto leading-relaxed">"${t.quote}"</p>
+          <p class="text-xl font-semibold text-gray-700">- ${t.author}</p>
+        </div>
+      `).join('');
+
+      // Render dots
+      dotsContainer.innerHTML = testimonialData.map((_, i) => 
+        `<button class="slider-dot ${i === 0 ? 'active' : ''}" data-slide="${i}" aria-label="Go to testimonial ${i + 1}"></button>`
+      ).join('');
+
+      function updateSlider() {
+        track.style.transform = `translateX(-${currentSlide * 100}%)`;
+        dotsContainer.querySelectorAll('.slider-dot').forEach((dot, index) => {
+          dot.classList.toggle('active', index === currentSlide);
+        });
+      }
+
+      function nextSlide() {
+        currentSlide = (currentSlide + 1) % testimonialData.length;
+        updateSlider();
+      }
+
+      function prevSlide() {
+        currentSlide = (currentSlide - 1 + testimonialData.length) % testimonialData.length;
+        updateSlider();
+      }
+
+      function goToSlide(index) {
+        currentSlide = index;
+        updateSlider();
+      }
+
+      // Event listeners
+      document.getElementById('prev-btn').addEventListener('click', prevSlide);
+      document.getElementById('next-btn').addEventListener('click', nextSlide);
+      
+      dotsContainer.querySelectorAll('.slider-dot').forEach((dot, index) => {
+        dot.addEventListener('click', () => goToSlide(index));
+      });
+
+      // Auto-advance
+      setInterval(nextSlide, 5000);
+    }
+
+    // SPA Navigation
+    function showPage(pageId) {
+      // Hide all pages
+      document.querySelectorAll('.page-section').forEach(page => {
+        page.classList.remove('active');
+      });
+      
+      // Show selected page
+      const targetPage = document.getElementById(pageId);
+      if (targetPage) {
+        targetPage.classList.add('active');
+        
+        // Update URL hash
+        history.pushState(null, null, `#${pageId}`);
+        
+        // Scroll to top of the page
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        // Close mobile menu
+        document.getElementById('mobile-menu').classList.add('hidden');
+        document.getElementById('menu-btn').setAttribute('aria-expanded', 'false');
+        
+        // Special handling for home page sections
+        if (pageId === 'home-page') {
+          // Ensure all home sections are visible
+          document.getElementById('home-page').classList.add('active');
+        }
+      }
+    }
+
+    // DOM Content Loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Mobile menu toggle
+      const menuBtn = document.getElementById('menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        const isExpanded = !mobileMenu.classList.contains('hidden');
+        menuBtn.setAttribute('aria-expanded', isExpanded);
+      });
+
+      // Handle navigation links
+      document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href').substring(1);
+          
+          // Check if it's a page or a section
+          const pageElement = document.getElementById(targetId + '-page');
+          const sectionElement = document.getElementById(targetId);
+          
+          if (pageElement) {
+            // It's a dedicated page
+            showPage(targetId + '-page');
+          } else if (sectionElement) {
+            // It's a section within home page
+            showPage('home-page');
+            // Scroll to the section after a brief delay
+            setTimeout(() => {
+              sectionElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+          }
+        });
+      });
+
+      // FAQ accordion
+      document.querySelectorAll('.faq-q').forEach(question => {
+        question.addEventListener('click', () => {
+          const answer = question.nextElementSibling;
+          const isOpen = question.getAttribute('aria-expanded') === 'true';
+          
+          question.setAttribute('aria-expanded', !isOpen);
+          answer.style.maxHeight = isOpen ? '0' : answer.scrollHeight + 'px';
+        });
+      });
+
+      // Contact modal triggers
+      document.querySelectorAll('.open-contact-modal').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const program = btn.dataset.program || '';
+          openContactModal(program);
+        });
+      });
+
+      // Modal close buttons
+      contactModalClose.addEventListener('click', closeContactModal);
+      blogModalClose.addEventListener('click', closeBlogModal);
+      
+      // Close on overlay click
+      contactModal.addEventListener('click', (e) => {
+        if (e.target === contactModal) closeContactModal();
+      });
+      blogModal.addEventListener('click', (e) => {
+        if (e.target === blogModal) closeBlogModal();
+      });
+
+      // Escape key to close modals
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          if (contactModal.classList.contains('active')) closeContactModal();
+          if (blogModal.classList.contains('active')) closeBlogModal();
+        }
+      });
+
+      // Form submission
+      document.getElementById('contact-form-modal').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const form = e.target;
+        const messageDiv = document.getElementById('form-message');
+        
+        messageDiv.classList.remove('hidden', 'bg-red-100', 'text-red-600', 'bg-green-100', 'text-green-600');
+        messageDiv.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Sending...';
+        messageDiv.classList.add('bg-blue-100', 'text-blue-600');
+        messageDiv.classList.remove('hidden');
+
+        // Simulate EmailJS (replace with actual emailjs.sendForm())
+        setTimeout(() => {
+          messageDiv.classList.remove('bg-blue-100', 'text-blue-600');
+          messageDiv.classList.add('bg-green-100', 'text-green-600');
+          messageDiv.innerHTML = '<i class="fas fa-check-circle mr-2"></i> Enquiry sent! We\'ll contact you within 24 hours.';
+          form.reset();
+          
+          setTimeout(() => {
+            closeContactModal();
+            messageDiv.classList.add('hidden');
+          }, 2000);
+        }, 1500);
+      });
+
+      // Render blog cards on home page
+      const blogContainer = document.getElementById('blog-cards-home');
+      if (blogContainer) {
+        blogContainer.innerHTML = blogData.slice(0, 3).map(blog => `
+          <div class="blog-card">
+            <img src="${blog.image}" alt="${blog.title}">
+            <div class="blog-card-content">
+              <h3>${blog.title}</h3>
+              <p>${blog.summary}</p>
+              <button class="btn-primary" onclick="openBlogModal(${blog.id})">Read More</button>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // Initialize testimonial slider
+      initTestimonialSlider();
+
+      // Handle initial page load
+      const hash = window.location.hash.substring(1);
+      if (hash) {
+        const pageElement = document.getElementById(hash + '-page');
+        if (pageElement) {
+          showPage(hash + '-page');
+        } else {
+          showPage('home-page');
+        }
+      } else {
+        showPage('home-page');
+      }
+
+      // Show initial popup after 3 seconds (only once per session)
+      if (!sessionStorage.getItem('hasSeenInitialPopup')) {
+        setTimeout(() => {
+          openContactModal('Initial Visit');
+          sessionStorage.setItem('hasSeenInitialPopup', 'true');
+        }, 3000);
+      }
+
+      // Close mobile menu on window resize
+      window.addEventListener('resize', () => {
+        if (window.innerWidth >= 768) {
+          mobileMenu.classList.add('hidden');
+          menuBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    // Global functions for onclick handlers
+    window.openBlogModal = openBlogModal;
+    window.openContactModal = openContactModal;
+    window.showPage = showPage;
+  </script>
+
+</body>
+</html>
